@@ -38,7 +38,7 @@ void executeCommand(char* tokens[], int tokenCount) {
         }
 
         if (*cp == NULL)
-            printf("%s: command not found\n", args[0]);
+            printf("%s: not found\n", args[0]);
     } else {
         printf("%s: command not found\n", command);
     }
