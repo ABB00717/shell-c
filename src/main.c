@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     while (inputCommand(&input) == 0) {
         tokenCount = 0;
         parseInput(input, tokens, &tokenCount);
-        executeCommand(tokens);
+        executeCommand(tokens, tokenCount);
     }
 
     // Free all memories
