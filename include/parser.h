@@ -13,6 +13,7 @@ typedef struct {
     bool appendMode;
 } CommandNode;
 
+char* appendChar(char* token, int* size, char c);
 void parseInput(char *input, char ***tokens, int *tokenCount);
 void parseCommand(CommandNode*** commands, char*** tokens, int tokenCount);
 

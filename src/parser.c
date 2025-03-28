@@ -6,12 +6,26 @@
 #include <string.h>
 #include <unistd.h>
 
+char* appendChar(char* token, int* size, char c) {
+    token = realloc(token, (*size) + 2);
+    if (!token) {
+        perror("realloc");
+        exit(EXIT_FAILURE);
+    }
+    token[(*size)++] = c;
+    token[*size] = '\0';
+    return token;
+}
+
 void parseInput(char* input, char*** tokens, int* tokenCount) {
     int capacity = 10;
     *tokens = malloc(sizeof(char*) * capacity);
+    if (!*tokens) {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
     *tokenCount = 0;
 
-    char c;
     char* ip = input;
     char* currentToken = NULL;
     int currentTokenSize = 0;
@@ -19,30 +33,24 @@ void parseInput(char* input, char*** tokens, int* tokenCount) {
     bool insideDoubleQuotes = FALSE;
     bool escape = FALSE;
 
-    while (*ip != 0) {
-        c = *ip++;
+    while (*ip != '\0') {
+        char c = *ip++;
 
         if (escape) {
             escape = FALSE;
-            currentToken = realloc(currentToken, currentTokenSize + 2);
-            currentToken[currentTokenSize++] = c;
-            currentToken[currentTokenSize] = '\0';
+            currentToken = appendChar(currentToken, &currentTokenSize, c);
             continue;
         }
 
         if (c == '\\') {
             if (insideSingleQuotes) {
-                currentToken = realloc(currentToken, currentTokenSize + 2);
-                currentToken[currentTokenSize++] = c;
-                currentToken[currentTokenSize] = '\0';
+                currentToken = appendChar(currentToken, &currentTokenSize, c);
             } else if (insideDoubleQuotes) {
                 char next = *ip;
                 if (next == '"' || next == '\\' || next == '$') {
                     escape = TRUE;
                 } else {
-                    currentToken = realloc(currentToken, currentTokenSize + 2);
-                    currentToken[currentTokenSize++] = c;
-                    currentToken[currentTokenSize] = '\0';
+                    currentToken = appendChar(currentToken, &currentTokenSize, c);
                 }
             } else {
                 escape = TRUE;
@@ -53,33 +61,33 @@ void parseInput(char* input, char*** tokens, int* tokenCount) {
             insideDoubleQuotes = !insideDoubleQuotes;
         } else if (isspace(c) && !insideSingleQuotes && !insideDoubleQuotes) {
             if (currentTokenSize != 0) {
-                currentToken = realloc(currentToken, currentTokenSize + 1);
-                currentToken[currentTokenSize] = '\0';
-
                 if (*tokenCount >= capacity) {
                     capacity *= 2;
                     *tokens = realloc(*tokens, sizeof(char*) * capacity);
+                    if (!*tokens) {
+                        perror("realloc");
+                        exit(EXIT_FAILURE);
+                    }
                 }
-
                 (*tokens)[(*tokenCount)++] = strdup(currentToken);
                 free(currentToken);
                 currentToken = NULL;
                 currentTokenSize = 0;
             }
         } else {
-            currentToken = realloc(currentToken, currentTokenSize + 2);
-            currentToken[currentTokenSize++] = c;
-            currentToken[currentTokenSize] = '\0';
+            currentToken = appendChar(currentToken, &currentTokenSize, c);
         }
     }
 
     // last token
     if (currentTokenSize != 0) {
-        currentToken = realloc(currentToken, currentTokenSize + 1);
-        currentToken[currentTokenSize] = '\0';
         if (*tokenCount >= capacity) {
             capacity *= 2;
             *tokens = realloc(*tokens, sizeof(char*) * capacity);
+            if (!*tokens) {
+                perror("realloc");
+                exit(EXIT_FAILURE);
+            }
         }
         (*tokens)[(*tokenCount)++] = strdup(currentToken);
         free(currentToken);
