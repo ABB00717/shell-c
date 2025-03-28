@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-const char* builtinCommands[] = {"echo", "type", "exit", NULL};
+const char* builtinCommands[] = {"echo", "type", "exit", "pwd", "cd", NULL};
 
 void commandNotFound(const char* command) {
     printf("%s: command not found\n", command);
@@ -71,5 +71,12 @@ void handleExternalProgram(const char *command, char* const args[], const int ar
     } else {
         int status;
         waitpid(pid, &status, 0);
+    }
+}
+
+void handlePwd() {
+    char buffer[FILENAME_MAX];
+    if (getcwd(buffer, FILENAME_MAX)) {
+        printf("%s\n", buffer);
     }
 }

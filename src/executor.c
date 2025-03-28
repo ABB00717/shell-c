@@ -24,6 +24,10 @@ void executeCommand(char* tokens[], int tokensCount) {
         handleEcho((const char**)args);
     } else if (strcmp(command, "type") == 0) {
         handleType((const char**)args);
+    } else if (strcmp(command, "pwd") == 0) {
+        handlePwd();
+    } else if (strcmp(command, "cd") == 0) {
+        handleCd((const char**)args);
     } else {
         char *path = getPath(command);
         if (path == NULL) {
