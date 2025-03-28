@@ -80,3 +80,18 @@ void handlePwd() {
         printf("%s\n", buffer);
     }
 }
+
+void handleCd(const char **args, const int argsCount) {
+    if (argsCount != 1) {
+        printf("Usage: cd [dir]\n");
+        return;
+    } else if (strcmp(args[0], "~") == 0) {
+        const char* homeDir = getenv("HOME");
+        chdir(homeDir);
+    } else {
+        const char* newPath = args[0];
+        if (chdir(newPath) != 0) {
+            printf("cd: %s: No such file or directory\n", newPath);
+        }
+    }
+}

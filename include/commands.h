@@ -11,6 +11,6 @@ void handleExit(const char* args[]);
 void handleType(const char* args[]);
 void handleExternalProgram(const char* command, char* const args[], const int argsCount);
 void handlePwd();
-void handleCd(const char* args[]);
+void handleCd(const char* args[], const int argsCount);
 
 #endif
