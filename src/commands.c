@@ -33,7 +33,19 @@ void handleType(const char** args) {
             }
         }
 
-        if (*cp == NULL)
-            printf("%s: not found\n", args[0]);
+        if (*cp != NULL)
+            return;
+
+        char* path = getPath(args[0]);
+        if (path != NULL) {
+            printf("%s is /bin/%s\n", args[0], path);
+            free(path);
+        } else {
+            printf("%s is not found\n", args[0]);
+        }
     }
+}
+
+void handleExternalProgram(const char *command, const char* args[]) {
+    
 }
