@@ -48,7 +48,7 @@ char* getPath(const char* command) {
             return strdup(full_path);
         }
 
-        strtok(NULL, ":");
+        token = strtok(NULL, ":");
     }
 
     free(path_copy);

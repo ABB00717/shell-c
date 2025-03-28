@@ -6,7 +6,7 @@
 const char* builtinCommands[] = {"echo", "type", "exit", NULL};
 
 void commandNotFound(const char* command) {
-    printf("%s: command not found", command);
+    printf("%s: command not found\n", command);
 }
 
 void handleExit(const char** args) {
