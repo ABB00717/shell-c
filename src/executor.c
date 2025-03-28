@@ -25,6 +25,11 @@ void executeCommand(char* tokens[], int tokenCount) {
     } else if (strcmp(command, "type") == 0) {
         handleType((const char**)args);
     } else {
-        commandNotFound(command);
+        char *path = getPath(command);
+        if (path == NULL) {
+            commandNotFound(command);
+        }
+
+        handleExternalProgram(command, args);
     }
 }
