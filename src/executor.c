@@ -28,8 +28,8 @@ void executeCommand(char* tokens[], int tokenCount) {
         char *path = getPath(command);
         if (path == NULL) {
             commandNotFound(command);
+        }else {
+            handleExternalProgram(command, args);
         }
-
-        handleExternalProgram(command, args);
     }
 }
