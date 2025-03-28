@@ -19,27 +19,12 @@ void executeCommand(char* tokens[], int tokenCount) {
     }
 
     if (strcmp(command, "exit") == 0) {
-        if (args && args[0] && strcmp(args[0], "0") == 0) {
-            free(args);
-            exit(0);
-        }
+        handleExit((const char**)args);
     } else if (strcmp(command, "echo") == 0) {
-        while (*args != NULL) {
-            printf("%s ", *args++);
-        }
-        printf("\n");
-    } else if (strcmp(command, "type") == 0 && args && args[0]) {
-        const char **cp = builtinCommands;
-        for (; *cp != NULL; cp++) {
-            if (strcmp(*cp, args[0]) == 0) {
-                printf("%s is a shell builtin\n", *cp);\
-                break;
-            }
-        }
-
-        if (*cp == NULL)
-            printf("%s: not found\n", args[0]);
+        handleEcho((const char**)args);
+    } else if (strcmp(command, "type") == 0) {
+        handleType((const char**)args);
     } else {
-        printf("%s: command not found\n", command);
+        commandNotFound(command);
     }
 }

@@ -2,8 +2,7 @@
 #define COMMAND_EXECUTER_H
 
 #include <stdio.h>
-
-static const char *builtinCommands[] = {"echo", "type", "exit", NULL};
+#include "commands.h"
 
 void executeCommand(char *tokens[], int tokenCount);
 

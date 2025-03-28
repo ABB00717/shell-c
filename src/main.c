@@ -9,12 +9,14 @@ int main(int argc, char* argv[]) {
     setbuf(stdout, NULL);
 
     // Wait for user input
-    char* tokens[MAX_TOKEN_COUNT];
+    char** tokens;
     char* input = NULL;
     int tokenCount = 0;
     while (inputCommand(&input) == 0) {
         tokenCount = 0;
-        parseInput(input, tokens, &tokenCount);
+        parseInput(input, &tokens, &tokenCount);
+        
+        
         executeCommand(tokens, tokenCount);
     }
 

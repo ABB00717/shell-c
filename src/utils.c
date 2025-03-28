@@ -1,5 +1,6 @@
 #include "../include/utils.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 unsigned inputCommand(char **input) {
@@ -13,11 +14,19 @@ unsigned inputCommand(char **input) {
     return linelen != -1 ? 0 : 1;
 }
 
-void parseInput(char *input, char *tokens[], int *tokenCount) {    
-    char *token = strtok(input, " ");
+void parseInput(char *input, char ***tokens, int *tokenCount) {    
+    int capacity = 10;
+    *tokens = malloc(sizeof(char*) * capacity);
+    *tokenCount = 0;
     
-    while (token != NULL && *tokenCount < MAX_TOKEN_COUNT) {
-        tokens[(*tokenCount)++] = strdup(token);
+    char *token = strtok(input, " ");
+    while (token != NULL) {
+        if (*tokenCount >= capacity) {
+            capacity *= 2;
+            *tokens = realloc(*tokens, sizeof(char*) * capacity);
+        }
+        
+        (*tokens)[(*tokenCount)++] = strdup(token);
         token = strtok(NULL, " ");
     }
 }
