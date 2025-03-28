@@ -41,7 +41,7 @@ void handleType(const char** args) {
 
         char* path = getPath(args[0]);
         if (path != NULL) {
-            printf("%s is /bin/%s\n", args[0], path);
+            printf("%s is /bin%s\n", args[0], path);
             free(path);
         } else {
             printf("%s is not found\n", args[0]);
