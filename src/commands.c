@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 const char* builtinCommands[] = {"echo", "type", "exit", NULL};
 
@@ -46,6 +49,19 @@ void handleType(const char** args) {
     }
 }
 
-void handleExternalProgram(const char *command, const char* args[]) {
+void handleExternalProgram(const char *command, char* const args[]) {
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork failed");
+        return;
+    }
     
+    if (pid == 0) {
+        execvp(command, args);
+        perror("execvp failed");
+    } else {
+        int status;
+        waitpid(pid, &status, 0);
+    }
 }
