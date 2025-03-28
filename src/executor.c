@@ -3,19 +3,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-void executeCommand(char* tokens[], int tokenCount) {
+void executeCommand(char* tokens[], int tokensCount) {
     if (tokens == NULL || tokens[0] == NULL)
         return;
 
     char *command = tokens[0];
     char **args = NULL;
 
-    if (tokenCount > 1) {
-        args = malloc(sizeof(char*) * tokenCount);
-        for (int i = 1; i < tokenCount; i++) {
+    if (tokensCount > 1) {
+        args = malloc(sizeof(char*) * tokensCount);
+        for (int i = 1; i < tokensCount; i++) {
             args[i-1] = tokens[i];
         }
-        args[tokenCount-1] = NULL;
+        args[tokensCount-1] = NULL;
     }
 
     if (strcmp(command, "exit") == 0) {
@@ -29,7 +29,7 @@ void executeCommand(char* tokens[], int tokenCount) {
         if (path == NULL) {
             commandNotFound(command);
         }else {
-            handleExternalProgram(command, args);
+            handleExternalProgram(command, args, tokensCount-1);
         }
     }
 }

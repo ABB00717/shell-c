@@ -49,7 +49,15 @@ void handleType(const char** args) {
     }
 }
 
-void handleExternalProgram(const char *command, char* const args[]) {
+void handleExternalProgram(const char *command, char* const args[], const int argsCount) {
+    // one extra space for command, while the other is for NULL
+    char** argsForExe = malloc(sizeof(char*) * (argsCount + 2));
+    argsForExe[0] = strdup(command);
+    for (int i = 0; i < argsCount; i++) {
+        argsForExe[i+1] = args[i];
+    }
+    argsForExe[argsCount+1] = NULL;
+    
     pid_t pid = fork();
 
     if (pid < 0) {
@@ -58,7 +66,7 @@ void handleExternalProgram(const char *command, char* const args[]) {
     }
     
     if (pid == 0) {
-        execvp(command, args);
+        execvp(command, argsForExe);
         perror("execvp failed");
     } else {
         int status;
