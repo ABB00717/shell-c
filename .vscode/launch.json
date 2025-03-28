@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "LLDB Debug",
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/<executable file>",
+            "program": "${workspaceFolder}/build/shell",
             "args": [],
             "cwd": "${workspaceFolder}"
         }
