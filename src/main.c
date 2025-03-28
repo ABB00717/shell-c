@@ -3,7 +3,7 @@
 #include <string.h>
 #include "../include/parser.h"
 #include "../include/utils.h"
-#include "../include/executor.h"
+#include "../include/dispatcher.h"
 
 int main(int argc, char* argv[]) {
     // Flush after every printf
@@ -11,13 +11,16 @@ int main(int argc, char* argv[]) {
 
     // Wait for user input
     char** tokens;
+    CommandNode** commands;
     char* input = NULL;
     int tokenCount = 0;
     while (inputCommand(&input) == 0) {
         tokenCount = 0;
         parseInput(input, &tokens, &tokenCount);
+        parseCommand(&commands, &tokens, tokenCount);
         
-        executeCommand(tokens, tokenCount);
+        // executeCommand(tokens, tokenCount);
+        dispatchCommands(commands);
     }
 
     // Free all memories
