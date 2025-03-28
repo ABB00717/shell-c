@@ -44,7 +44,7 @@ void handleType(const char** args) {
             printf("%s is %s\n", args[0], path);
             free(path);
         } else {
-            printf("%s is not found\n", args[0]);
+            printf("%s not found\n", args[0]);
         }
     }
 }
