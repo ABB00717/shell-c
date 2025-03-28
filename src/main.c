@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/utils.h"
-#include "../include/command_executer.h"
+#include "../include/executor.h"
 
 int main(int argc, char* argv[]) {
     // Flush after every printf
