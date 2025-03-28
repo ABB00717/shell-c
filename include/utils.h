@@ -1,8 +1,12 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+enum BOOL {
+    FALSE = 0,
+    TRUE = 1
+};
+
 unsigned inputCommand(char** input);
-void parseInput(char* input, char*** tokens, int* tokenCount);
 char* getPath(const char* command);
 
 #endif

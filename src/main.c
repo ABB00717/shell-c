@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/parser.h"
 #include "../include/utils.h"
 #include "../include/executor.h"
 
@@ -15,7 +16,6 @@ int main(int argc, char* argv[]) {
     while (inputCommand(&input) == 0) {
         tokenCount = 0;
         parseInput(input, &tokens, &tokenCount);
-        
         
         executeCommand(tokens, tokenCount);
     }
